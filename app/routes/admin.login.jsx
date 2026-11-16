@@ -1,0 +1,7 @@
+import { Form, Link, useActionData, useNavigation } from "@remix-run/react";
+import { json, redirect } from "@remix-run/node";
+import { isAdmin, login } from "../lib/auth.server";
+export async function loader({request}) { if (await isAdmin(request)) throw redirect('/admin'); return null; }
+export async function action({request}) { const form=await request.formData(); const password=String(form.get('password')||''); const cookie=await login(request,password); if(!cookie)return json({error:'Mật khẩu chưa chính xác.'},{status:400}); return redirect('/admin',{headers:{'Set-Cookie':cookie}}); }
+export const meta=()=>[{title:'Đăng nhập quản trị | Lời Hẹn'}];
+export default function Login(){const data=useActionData();const nav=useNavigation();return <main className="login-screen"><Link to="/" className="brand">lời hẹn<span>✦</span></Link><Form method="post" className="login-card"><span className="eyebrow">PRIVATE STUDIO</span><h1>Chào mừng trở lại.</h1><p>Đăng nhập để quản lý bộ sưu tập và tạo thiệp cưới.</p><label>Mật khẩu quản trị<input name="password" type="password" required autoComplete="current-password" placeholder="Nhập mật khẩu" /></label>{data?.error && <p className="error-text">{data.error}</p>}<button className="button" disabled={nav.state !== 'idle'}>{nav.state !== 'idle' ? 'Đang đăng nhập...' : 'Vào studio ↗'}</button><small>Chỉ tài khoản quản trị có quyền tạo và chỉnh sửa thiệp.</small></Form></main>}

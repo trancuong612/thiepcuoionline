@@ -1,0 +1,36 @@
+
+@'
+
+# Dependencies
+node_modules/
+
+# Build
+build/
+dist/
+.cache/
+.vite/
+.vercel/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Local database
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs
+*.log
+
+# Archives
+*.zip
+*.rar
+*.7z
+
+'@ | Add-Content .gitignore

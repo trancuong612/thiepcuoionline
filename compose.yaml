@@ -1,0 +1,14 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: wedding
+      POSTGRES_PASSWORD: wedding_local
+      POSTGRES_DB: wedding
+    ports:
+      - "5432:5432"
+    volumes:
+      - wedding_data:/var/lib/postgresql/data
+volumes:
+  wedding_data:

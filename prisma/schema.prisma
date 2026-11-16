@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Invitation {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  templateId  String
+  title       String
+  published   Boolean   @default(false)
+  content     Json
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  responses   Response[]
+  wishes      Wish[]
+}
+
+model Response {
+  id           String     @id @default(cuid())
+  invitationId String
+  invitation   Invitation @relation(fields: [invitationId], references: [id], onDelete: Cascade)
+  guestName    String
+  side         String?
+  attendance   String
+  partySize    Int        @default(1)
+  note         String?    @db.VarChar(1000)
+  createdAt    DateTime   @default(now())
+  @@index([invitationId, createdAt])
+}
+
+model Wish {
+  id           String     @id @default(cuid())
+  invitationId String
+  invitation   Invitation @relation(fields: [invitationId], references: [id], onDelete: Cascade)
+  guestName    String
+  message      String     @db.VarChar(1000)
+  approved     Boolean    @default(false)
+  createdAt    DateTime   @default(now())
+  @@index([invitationId, approved, createdAt])
+}
+
+model CloudinaryCleanup {
+  publicId  String   @id
+  attempts  Int      @default(0)
+  lastError String?
+  createdAt DateTime @default(now())
+}

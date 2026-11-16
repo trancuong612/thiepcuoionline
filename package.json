@@ -1,0 +1,33 @@
+{
+  "name": "wedding-atelier-remix",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "dev": "remix vite:dev --host 0.0.0.0",
+    "build": "remix vite:build",
+    "start": "remix-serve ./build/server/index.js",
+    "typecheck": "echo 'Dự án dùng JavaScript/JSX, không dùng TypeScript.'",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "db:studio": "prisma studio"
+  },
+  "dependencies": {
+    "@prisma/client": "6.19.3",
+    "@remix-run/node": "^2.17.2",
+    "@remix-run/react": "^2.17.2",
+    "@remix-run/serve": "^2.17.2",
+    "isbot": "^5.1.29",
+    "qrcode.react": "^4.2.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@remix-run/dev": "^2.17.2",
+    "prisma": "6.19.3",
+    "vite": "^6.3.5"
+  }
+}
